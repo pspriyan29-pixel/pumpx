@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/pump
+      MONGODB_DB: pump
+      NODE_ENV: production
+      # Observability
+      SENTRY_DSN: https://16261f4b625267e7b43727223a2bb1fe@o4510277929730048.ingest.us.sentry.io/4510277961252864
+      # Solana RPC & signer
+      SOLANA_RPC_URL: https://api.mainnet-beta.solana.com
+      SOLANA_SIGNER_SECRET: "[250,202,159,136,61,219,87,153,211,209,146,245,27,151,185,144,88,110,26,159,78,202,228,70,58,246,111,182,244,97,32,184,38,247,129,23,31,93,93,61,168,41,205,27,133,105,34,16,105,192,109,36,44,203,11,130,193,186,62,26,79,75,89,196]"
+      ENABLE_RAYDIUM_ONCHAIN: "false"
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+volumes:
+  mongo-data:
+
+

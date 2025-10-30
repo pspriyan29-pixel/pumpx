@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci --include=dev
+      - run: npm run lint
+      - run: npm run build
+        env:
+          # Provide minimal env needed for typecheck/build
+          MONGODB_URI: mongodb://localhost:27017/pump
+          MONGODB_DB: pump

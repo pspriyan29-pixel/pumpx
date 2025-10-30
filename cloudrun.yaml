@@ -1,0 +1,37 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: pumpp-web
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/PROJECT_ID/pumpp-web:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-uri
+                  key: latest
+            - name: MONGODB_DB
+              value: pump
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: admin-token
+                  key: latest
+            - name: ADMIN_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: admin-jwt-secret
+                  key: latest
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+      containerConcurrency: 80
+      timeoutSeconds: 300

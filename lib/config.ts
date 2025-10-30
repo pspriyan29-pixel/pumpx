@@ -1,0 +1,11 @@
+export const TREASURY_SOL_ADDRESS = process.env.TREASURY_SOL_ADDRESS || 'A6AZ7fMYrHHiLSi83rTGdoHeuSGvXr5pnSFwsHHnVQSX'
+export const TREASURY_BNB_ADDRESS = process.env.TREASURY_BNB_ADDRESS || '0x0000000000000000000000000000000000000000'
+
+export function getTreasury() {
+  return {
+    solana: TREASURY_SOL_ADDRESS,
+    bnb: TREASURY_BNB_ADDRESS,
+  }
+}
+
+
