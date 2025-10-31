@@ -4,8 +4,8 @@ set -euo pipefail
 # Usage: PROJECT_ID=your-project REGION=asia-southeast1 ./scripts/cloudrun/deploy.sh
 : "${PROJECT_ID:?set PROJECT_ID}"
 REGION="${REGION:-asia-southeast1}"
-IMAGE="gcr.io/${PROJECT_ID}/pumpp-worker:latest"
-SERVICE="pumpp-worker"
+IMAGE="gcr.io/${PROJECT_ID}/pumpp-web:latest"
+SERVICE="pumpp-web"
 
 # Build & push
 gcloud builds submit --tag "$IMAGE" .
